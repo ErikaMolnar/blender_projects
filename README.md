@@ -1,5 +1,11 @@
 # Blender Projects
 Ordered by New to Old
+---
+Spike Sphere animation in 3D
+
+![In 3D Space Animation](spike_sphere/render/spike_sphere_loop.gif)
+![Sphere](spike_sphere/render/spike_sphere1.png)
+![Close Up](spike_sphere/render/spike_sphere2.png)
 
 ---
 Golden Spiral animation in 3D
