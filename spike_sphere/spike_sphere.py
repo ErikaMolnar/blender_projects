@@ -55,7 +55,7 @@ def save_as_mp4(name="golden_loop"):
     project_name = name
     bpy.context.scene.render.image_settings.file_format = "FFMPEG"
     bpy.context.scene.render.ffmpeg.format = "MPEG4"
-    bpy.context.scene.render.filepath = f"./Users/erikamolnar/Blender_Projects/SpikeSphere/spike_sphere_loop.mp4"
+    bpy.context.scene.render.filepath = f"<path>/SpikeSphere/spike_sphere_loop.mp4"
 
 
 def set_environment(frame_count, fps=30):
@@ -83,8 +83,6 @@ def set_environment(frame_count, fps=30):
     # set the world background to black
     world = bpy.data.worlds["World"]
     if "Background" in world.node_tree.nodes:
-#        world.node_tree.nodes["Background"].inputs[0].default_value = (0.8, 0.5, 0.8, 1)
-        world.node_tree.nodes["Background"].inputs[0].default_value = (0.1, 0.1, 0.4, 1)
         world.node_tree.nodes["Background"].inputs[0].default_value = (0.3, 0.06, 0.4, 1)
     world.node_tree.nodes["World Output"].target = 'EEVEE'
 
@@ -218,31 +216,6 @@ def geometry_node_setup(base_sphere):
     )
 
 
-def create_sphere_shader2(sphere):
-    sphere = bpy.context.active_object
-    mat = bpy.data.materials.new(name="ReflectiveMaterial")
-    mat.use_nodes = True
-    mat.node_tree.nodes.clear()
-    
-    # Create a Principled BSDF shader node 
-    glossy_shader = mat.node_tree.nodes.new(type="ShaderNodeBsdfPrincipled")
-    glossy_shader.location = (0, 0)
-
-    # Set roughness to control
-    glossy_shader.inputs["Metallic"].default_value = 1
-    glossy_shader.inputs["Base Color"].default_value = (0.8, 0, 0.6, 1)
-
-
-    # Create a Material Output
-    material_output = mat.node_tree.nodes.new(type="ShaderNodeOutputMaterial")
-    material_output.location = (200, 0)
-
-    # Link the Glossy BSDF node to the Material Output
-    mat.node_tree.links.new(glossy_shader.outputs["BSDF"], material_output.inputs["Surface"])
-
-    sphere.data.materials.append(mat)
-
-
 def create_sphere_shader(sphere):
     sphere = bpy.context.active_object
     mat = bpy.data.materials.new(name="ReflectiveMaterial")
@@ -253,18 +226,17 @@ def create_sphere_shader(sphere):
     glossy_shader = mat.node_tree.nodes.new(type="ShaderNodeBsdfPrincipled")
     glossy_shader.location = (0, 0)
 
-    # Set roughness to control
+    # Set visual effects
     glossy_shader.distribution = 'GGX'
     glossy_shader.inputs["Metallic"].default_value = 1
     glossy_shader.inputs["Base Color"].default_value = (0.8, 0, 0.6, 1)
     glossy_shader.inputs["Coat Weight"].default_value = 1
 
-
     # Create a Material Output
     material_output = mat.node_tree.nodes.new(type="ShaderNodeOutputMaterial")
     material_output.location = (200, 0)
 
-    # Link the Glossy BSDF node to the Material Output
+    # Link the Principled BSDF node to the Material Output
     mat.node_tree.links.new(glossy_shader.outputs["BSDF"], material_output.inputs["Surface"])
 
     sphere.data.materials.append(mat)
@@ -278,7 +250,7 @@ def generate_spike_sphere():
 
 def main():
     """
-    Python code that creates a Fibinacci Spiral
+    Python code that creates a Spike Sphere
     """
     scene_setup()
     generate_spike_sphere()
