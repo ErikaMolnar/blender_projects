@@ -80,7 +80,7 @@ def save_as_mp4(name="golden_loop"):
     project_name = name
     bpy.context.scene.render.image_settings.file_format = "FFMPEG"
     bpy.context.scene.render.ffmpeg.format = "MPEG4"
-    bpy.context.scene.render.filepath = f"/<path>/Disolve/render/disolve_anim.mp4"
+    bpy.context.scene.render.filepath = f"/<path>/dissolve/render/dissolve_anim.mp4"
 
 
 def set_environment(frame_count, fps=30):
@@ -183,16 +183,16 @@ def create_empty_sphere():
     empty_sphere = bpy.ops.object.empty_add(type='SPHERE', align='WORLD',
                                             location=(-0.75, 0, 3), scale=(0.9, 0.9, 0.9))
     empty_sphere = bpy.context.object
-    empty_sphere.name = 'Disolve_sphere'
+    empty_sphere.name = 'Dissolve_sphere'
     
     return empty_sphere
 
 
-def create_disolve_effect(mesh):
+def create_dissolve_effect(mesh):
     # Add a Geometry Nodes modifier to the base sphere
     sphere = create_empty_sphere()
     mod = mesh.modifiers.new(name="GeometryNodes", type='NODES')
-    node_tree = bpy.data.node_groups.new(name="DisolveNodes", type='GeometryNodeTree')
+    node_tree = bpy.data.node_groups.new(name="DissolveNodes", type='GeometryNodeTree')
     mod.node_group = node_tree
 
     # Create Group Input and Output nodes
@@ -210,7 +210,7 @@ def create_disolve_effect(mesh):
     
     # Create Object Info Node
     obj_info = node_tree.nodes.new(type='GeometryNodeObjectInfo')
-    obj_info.inputs[0].default_value = bpy.data.objects["Disolve_sphere"]
+    obj_info.inputs[0].default_value = bpy.data.objects["Dissolve_sphere"]
     obj_info.transform_space = 'RELATIVE'
     obj_info.location = (0, 200)
     
@@ -468,7 +468,7 @@ def scene_setup(num_points=1000):
     set_camera(loc, rot)
     mesh = bpy.data.objects['textured']
     create_mesh_sand_shader(mesh)
-    create_disolve_effect(mesh)
+    create_dissolve_effect(mesh)
     
     
 def add_lights():
