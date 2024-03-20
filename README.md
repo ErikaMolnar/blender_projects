@@ -1,6 +1,15 @@
 # Blender Projects
 Ordered by New to Old
 ---
+
+Fractal animation in 3D
+
+![In 3D Space Animation](fractal_effect/render/fractal_effect.gif)
+![Mesh](fractal_effect/render/fractal_effect3.png)
+![Mesh](fractal_effect/render/fractal_effect4.png)
+
+---
+
 Mesh Dissolve animation in 3D
 
 ![In 3D Space Animation](dissolve_mesh/render/dissolve_anim.gif)
